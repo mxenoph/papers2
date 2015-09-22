@@ -4,9 +4,8 @@ import re
 import io
 
 from papers2.schema import Papers2
-db = Papers2(folder="/Users/mxenoph/Library/Application Support/Papers2")
+db = Papers2()
 
-#f = io.open('references.bib', 'w', encoding='utf8')
 f = open(u'references.bib', 'w')
 
 for ind, pub in enumerate(db.get_publications()):
@@ -30,9 +29,7 @@ for ind, pub in enumerate(db.get_publications()):
 	if matching:
 		year, volume, number, pages = matching.groups()
 		pages = re.sub(r'-', '--', pages)
-		title = unicode(pub.title)
 #		title = re.sub(r'\xa0', '', title)
-		print title
 		print >>f, '@articel{%s,\n author={%s},\n title={{%s}},\n journal={%s},\n year={%s},\n volume={%s},\n number={%s},\n pages={%s}\n}\n' % (pub.citekey, formatted_authors, title, pub.bundle_string, year, volume, number, pages)
 	else:
 		print 'No information on year of publication etc'
